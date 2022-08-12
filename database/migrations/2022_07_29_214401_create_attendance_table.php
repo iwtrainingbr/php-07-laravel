@@ -17,7 +17,8 @@ class CreateAttendanceTable extends Migration
             $table->id();
             $table->timestamps();
             
-            $table->string('type');
+            $table->foreignId('id_type')->references('id')->on('tb_type');
+
             $table->string('begin_hour');
             $table->string('begin_end');
             $table->string('price');
@@ -25,6 +26,7 @@ class CreateAttendanceTable extends Migration
             $table->string('attendant');
             $table->string('customer');
         });
+     
     }
 
     /**

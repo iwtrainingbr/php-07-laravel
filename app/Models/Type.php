@@ -5,28 +5,23 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Attendance extends Model
+class Type extends Model
 {
     use HasFactory;
 
-    protected $table = 'tb_attendance';
+    protected $table = 'tb_type';
 
     protected $primaryKey = 'id';
 
     public $incrementing = true;
 
     protected $fillable = [
-        'id_type',
-        'begin_hour',
-        'begin_end',
+        'name',
         'description',
-        'price',
-        'attendant',
-        'customer',
     ];
 
-    public function id_type()
+    public function attendances()
     {
-        $this->hasOne(Type::class, 'id_type');
+        $this->belongsTo(Attendance::class, 'id');
     }
 }

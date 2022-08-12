@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Attendance;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -12,19 +13,25 @@ class AttendanceController extends Controller
     public function getList()
     {
         return response()->json(
-            Attendance::all()
+            Attendance::with(Type::class)->get()
         );
     }
 
     public function getOne(int $id)
     {
         return response()->json(
-            Attendance::findOrFail($id)
+            Attendance::with('type')->findOrFail($id)
         );
     }
     
     public function post(Request $request)
     {
+        if (null === $request->get('type')) {
+            return response()->json([
+                'erro' => 'atributo "type" invalido'
+            ]);
+        }
+
         $attendance = Attendance::create(
             $request->all()
         );
